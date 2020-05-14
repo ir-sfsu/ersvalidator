@@ -1,0 +1,15 @@
+---
+title: "ERSS Validation Report"
+output: html_document
+params:
+  data:
+    input: file
+    label: "Input file:"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pointblank)
+
+```
+
