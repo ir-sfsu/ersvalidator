@@ -1,15 +1,54 @@
 ---
 title: "ERSS Validation Report"
 output: html_document
-params:
-  data:
-    input: file
-    label: "Input file:"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(pointblank)
+library(ersvalidator)
+library(readr)
 
+erss_path <- fs::path(ers_files(), "ERSS MVS Files/ERSS/20202-20214/ers.prod.ers2020275.Edited.EALLEN.txt")
+test1 <- read_delim(erss_path,
+                col_names = FALSE,
+                delim = " ",
+                trim_ws = TRUE,
+                col_types = cols(
+                  X1 = col_character(),
+                  X2 = col_character(),
+                  X3 = col_character(),
+                  X4 = col_character(),
+                  X5 = col_character(),
+                  X6 = col_character(),
+                  X7 = col_character(),
+                  X8 = col_character(),
+                  X9 = col_character(),
+                  X10 = col_character(),
+                  X11 = col_character(),
+                  X12 = col_character(),
+                  X13 = col_character(),
+                  X14 = col_character(),
+                  X15 = col_character(),
+                  X16 = col_character(),
+                  X17 = col_character(),
+                  X18 = col_character(),
+                  X19 = col_character()
+                  )
+                )
 ```
+
+
+```{r validation_step_functions, validate = TRUE}
+col_exists(test1, columns = vars(X1, X2, X3, d, e, f))
+rows_distinct(test1, vars(X5, X10))
+col_vals_gt(test1, vars(d), 1000)
+```
+
+
+```{r stop_if_not, validate = TRUE}
+stop_if_not(nrow(test1) > 10)
+stop_if_not("X10" %in% colnames(test1))
+```
+
 
