@@ -370,11 +370,65 @@ summary {
   <strong>Warning:</strong>
   this document contains 3 failing validations.
 </div>
+<div id="raw-data" class="section level2">
+<h2>Raw data</h2>
+<pre class="r"><code>erss_path &lt;- path(ers_files(), &quot;ERSS MVS Files/ERSS/20202-20214/ers.prod.ers2020275.Edited.EALLEN.txt&quot;)
+test1 &lt;- read_delim(erss_path,
+                col_names = FALSE,
+                delim = &quot; &quot;,
+                trim_ws = TRUE,
+                col_types = cols(
+                  X1 = col_character(),
+                  X2 = col_character(),
+                  X3 = col_character(),
+                  X4 = col_character(),
+                  X5 = col_character(),
+                  X6 = col_character(),
+                  X7 = col_character(),
+                  X8 = col_character(),
+                  X9 = col_character(),
+                  X10 = col_character(),
+                  X11 = col_character(),
+                  X12 = col_character(),
+                  X13 = col_character(),
+                  X14 = col_character(),
+                  X15 = col_character(),
+                  X16 = col_character(),
+                  X17 = col_character(),
+                  X18 = col_character(),
+                  X19 = col_character()
+                  )
+                )
+glimpse(test1)</code></pre>
+<pre><code>## Rows: 26,791
+## Columns: 19
+## $ X1  &lt;chr&gt; &quot;491118187202027519950303M&quot;, &quot;491139227202027519970204M&quot;, &quot;4921...
+## $ X2  &lt;chr&gt; &quot;Y790000000034R34512420184&quot;, &quot;Y790020150057R01523620194&quot;, &quot;Y790...
+## $ X3  &lt;chr&gt; &quot;N14210101N&quot;, &quot;N13210101N&quot;, &quot;N13222081N&quot;, &quot;N13220011N&quot;, &quot;N14307...
+## $ X4  &lt;chr&gt; &quot;6008403283491120335&quot;, &quot;4007283363090828333&quot;, &quot;4006403453170760...
+## $ X5  &lt;chr&gt; &quot;1NLA500601YYYY&quot;, &quot;1NNX500601YYYY&quot;, &quot;1NNX451101YYYY&quot;, &quot;1NNX4201...
+## $ X6  &lt;chr&gt; &quot;N0000000&quot;, &quot;N0000000&quot;, &quot;N0000000&quot;, &quot;N0000000&quot;, &quot;N0000000&quot;, &quot;NN...
+## $ X7  &lt;chr&gt; &quot;00015000000000&quot;, &quot;00009000000000&quot;, &quot;03011000000000&quot;, &quot;00015000...
+## $ X8  &lt;chr&gt; &quot;0000000000&quot;, &quot;0000000000&quot;, &quot;0000000000&quot;, &quot;0000000000&quot;, &quot;000000...
+## $ X9  &lt;chr&gt; &quot;00000000000000000000000000000000000000&quot;, &quot;00000000000000000000...
+## $ X10 &lt;chr&gt; &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000000000000000000000000080...
+## $ X11 &lt;chr&gt; &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, &quot;000&quot;, ...
+## $ X12 &lt;chr&gt; &quot;R0000000570&quot;, &quot;R0000000190&quot;, &quot;R0000000260&quot;, &quot;R0000000280&quot;, &quot;R0...
+## $ X13 &lt;chr&gt; &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;Y10017700&quot;, &quot;D&quot;, &quot;R0000000300&quot;, &quot;N&quot;, &quot;R00000003...
+## $ X14 &lt;chr&gt; &quot;022200&quot;, &quot;011100&quot;, &quot;011100&quot;, &quot;49239875600000092026235320011553...
+## $ X15 &lt;chr&gt; &quot;49111818700000091837474810101553555220080000000000000000000004...
+## $ X16 &lt;chr&gt; &quot;00000000005561146271T&quot;, &quot;00000000003468515454T&quot;, &quot;200000000008...
+## $ X17 &lt;chr&gt; &quot;T&quot;, &quot;T&quot;, &quot;T&quot;, &quot;30007&quot;, &quot;00000000007771604157T&quot;, &quot;0000000000000...
+## $ X18 &lt;chr&gt; &quot;00000&quot;, &quot;00000&quot;, &quot;00000&quot;, NA, &quot;T&quot;, &quot;0000001011&quot;, &quot;00000&quot;, &quot;000...
+## $ X19 &lt;chr&gt; NA, NA, NA, NA, &quot;00000&quot;, &quot;A&quot;, NA, &quot;N&quot;, NA, &quot;00000&quot;, &quot;00000&quot;, &quot;0...</code></pre>
+</div>
+<div id="validation-1" class="section level2">
+<h2>Validation 1</h2>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-4123508" aria-expanded="false" aria-controls="chunk-4123508" style="cursor: pointer;">3 validations failed.</span>
+  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-3234628" aria-expanded="false" aria-controls="chunk-3234628" style="cursor: pointer;">3 validations failed.</span>
 </div>
-<div id="chunk-4123508" class="pointblank-chunk panel panel-danger collapse" >
+<div id="chunk-3234628" class="pointblank-chunk panel panel-danger collapse" >
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-danger">
@@ -429,11 +483,14 @@ summary {
   </div>
 </div>
 
+</div>
+<div id="validation-2" class="section level2">
+<h2>Validation 2</h2>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-success" data-toggle="collapse" data-target="#chunk-8942783" aria-expanded="false" aria-controls="chunk-8942783" style="cursor: pointer;">All validations passed.</span>
+  <span class="pointblank-badge label label-success" data-toggle="collapse" data-target="#chunk-7086467" aria-expanded="false" aria-controls="chunk-7086467" style="cursor: pointer;">All validations passed.</span>
 </div>
-<div id="chunk-8942783" class="pointblank-chunk panel panel-success collapse" >
+<div id="chunk-7086467" class="pointblank-chunk panel panel-success collapse" >
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-success">
@@ -459,6 +516,247 @@ summary {
   </div>
 </div>
 
+</div>
+<div id="validator-functions" class="section level2">
+<h2>Validator functions</h2>
+<pre class="r"><code>strsplit(lsf.str(&quot;package:pointblank&quot;), &quot;:&quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;%&gt;%&quot;
+## 
+## [[2]]
+## [1] &quot;action_levels&quot;
+## 
+## [[3]]
+## [1] &quot;all_passed&quot;
+## 
+## [[4]]
+## [1] &quot;col_exists&quot;
+## 
+## [[5]]
+## [1] &quot;col_is_character&quot;
+## 
+## [[6]]
+## [1] &quot;col_is_date&quot;
+## 
+## [[7]]
+## [1] &quot;col_is_factor&quot;
+## 
+## [[8]]
+## [1] &quot;col_is_integer&quot;
+## 
+## [[9]]
+## [1] &quot;col_is_logical&quot;
+## 
+## [[10]]
+## [1] &quot;col_is_numeric&quot;
+## 
+## [[11]]
+## [1] &quot;col_is_posix&quot;
+## 
+## [[12]]
+## [1] &quot;col_schema&quot;
+## 
+## [[13]]
+## [1] &quot;col_schema_match&quot;
+## 
+## [[14]]
+## [1] &quot;col_vals_between&quot;
+## 
+## [[15]]
+## [1] &quot;col_vals_equal&quot;
+## 
+## [[16]]
+## [1] &quot;col_vals_gt&quot;
+## 
+## [[17]]
+## [1] &quot;col_vals_gte&quot;
+## 
+## [[18]]
+## [1] &quot;col_vals_in_set&quot;
+## 
+## [[19]]
+## [1] &quot;col_vals_lt&quot;
+## 
+## [[20]]
+## [1] &quot;col_vals_lte&quot;
+## 
+## [[21]]
+## [1] &quot;col_vals_not_between&quot;
+## 
+## [[22]]
+## [1] &quot;col_vals_not_equal&quot;
+## 
+## [[23]]
+## [1] &quot;col_vals_not_in_set&quot;
+## 
+## [[24]]
+## [1] &quot;col_vals_not_null&quot;
+## 
+## [[25]]
+## [1] &quot;col_vals_null&quot;
+## 
+## [[26]]
+## [1] &quot;col_vals_regex&quot;
+## 
+## [[27]]
+## [1] &quot;conjointly&quot;
+## 
+## [[28]]
+## [1] &quot;contains&quot;
+## 
+## [[29]]
+## [1] &quot;create_agent&quot;
+## 
+## [[30]]
+## [1] &quot;creds&quot;
+## 
+## [[31]]
+## [1] &quot;creds_anonymous&quot;
+## 
+## [[32]]
+## [1] &quot;creds_file&quot;
+## 
+## [[33]]
+## [1] &quot;creds_key&quot;
+## 
+## [[34]]
+## [1] &quot;email_blast&quot;
+## 
+## [[35]]
+## [1] &quot;email_preview&quot;
+## 
+## [[36]]
+## [1] &quot;ends_with&quot;
+## 
+## [[37]]
+## [1] &quot;everything&quot;
+## 
+## [[38]]
+## [1] &quot;expect_col_exists&quot;
+## 
+## [[39]]
+## [1] &quot;expect_col_is_character&quot;
+## 
+## [[40]]
+## [1] &quot;expect_col_is_date&quot;
+## 
+## [[41]]
+## [1] &quot;expect_col_is_factor&quot;
+## 
+## [[42]]
+## [1] &quot;expect_col_is_integer&quot;
+## 
+## [[43]]
+## [1] &quot;expect_col_is_logical&quot;
+## 
+## [[44]]
+## [1] &quot;expect_col_is_numeric&quot;
+## 
+## [[45]]
+## [1] &quot;expect_col_is_posix&quot;
+## 
+## [[46]]
+## [1] &quot;expect_col_schema_match&quot;
+## 
+## [[47]]
+## [1] &quot;expect_col_vals_between&quot;
+## 
+## [[48]]
+## [1] &quot;expect_col_vals_equal&quot;
+## 
+## [[49]]
+## [1] &quot;expect_col_vals_gt&quot;
+## 
+## [[50]]
+## [1] &quot;expect_col_vals_gte&quot;
+## 
+## [[51]]
+## [1] &quot;expect_col_vals_in_set&quot;
+## 
+## [[52]]
+## [1] &quot;expect_col_vals_lt&quot;
+## 
+## [[53]]
+## [1] &quot;expect_col_vals_lte&quot;
+## 
+## [[54]]
+## [1] &quot;expect_col_vals_not_between&quot;
+## 
+## [[55]]
+## [1] &quot;expect_col_vals_not_equal&quot;
+## 
+## [[56]]
+## [1] &quot;expect_col_vals_not_in_set&quot;
+## 
+## [[57]]
+## [1] &quot;expect_col_vals_not_null&quot;
+## 
+## [[58]]
+## [1] &quot;expect_col_vals_null&quot;
+## 
+## [[59]]
+## [1] &quot;expect_col_vals_regex&quot;
+## 
+## [[60]]
+## [1] &quot;expect_conjointly&quot;
+## 
+## [[61]]
+## [1] &quot;expect_rows_distinct&quot;
+## 
+## [[62]]
+## [1] &quot;get_agent_report&quot;
+## 
+## [[63]]
+## [1] &quot;get_agent_x_list&quot;
+## 
+## [[64]]
+## [1] &quot;get_data_extracts&quot;
+## 
+## [[65]]
+## [1] &quot;get_sundered_data&quot;
+## 
+## [[66]]
+## [1] &quot;interrogate&quot;
+## 
+## [[67]]
+## [1] &quot;matches&quot;
+## 
+## [[68]]
+## [1] &quot;rows_distinct&quot;
+## 
+## [[69]]
+## [1] &quot;rows_not_duplicated&quot;
+## 
+## [[70]]
+## [1] &quot;scan_data&quot;
+## 
+## [[71]]
+## [1] &quot;small_table_sqlite&quot;
+## 
+## [[72]]
+## [1] &quot;starts_with&quot;
+## 
+## [[73]]
+## [1] &quot;stock_msg_body&quot;
+## 
+## [[74]]
+## [1] &quot;stock_msg_footer&quot;
+## 
+## [[75]]
+## [1] &quot;stop_if_not&quot;
+## 
+## [[76]]
+## [1] &quot;stop_on_fail&quot;
+## 
+## [[77]]
+## [1] &quot;validate_rmd&quot;
+## 
+## [[78]]
+## [1] &quot;vars&quot;
+## 
+## [[79]]
+## [1] &quot;warn_on_fail&quot;</code></pre>
+</div>
 
 
 

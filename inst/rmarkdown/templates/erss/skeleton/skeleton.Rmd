@@ -8,8 +8,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library(pointblank)
 library(ersvalidator)
 library(readr)
+library(dplyr)
+library(fs)
+```
 
-erss_path <- fs::path(ers_files(), "ERSS MVS Files/ERSS/20202-20214/ers.prod.ers2020275.Edited.EALLEN.txt")
+## Raw data
+```{r warning = FALSE}
+erss_path <- path(ers_files(), "ERSS MVS Files/ERSS/20202-20214/ers.prod.ers2020275.Edited.EALLEN.txt")
 test1 <- read_delim(erss_path,
                 col_names = FALSE,
                 delim = " ",
@@ -36,8 +41,12 @@ test1 <- read_delim(erss_path,
                   X19 = col_character()
                   )
                 )
+glimpse(test1)
 ```
 
+
+
+## Validation 1
 
 ```{r validation_step_functions, validate = TRUE}
 col_exists(test1, columns = vars(X1, X2, X3, d, e, f))
@@ -45,10 +54,17 @@ rows_distinct(test1, vars(X5, X10))
 col_vals_gt(test1, vars(d), 1000)
 ```
 
+## Validation 2
 
 ```{r stop_if_not, validate = TRUE}
 stop_if_not(nrow(test1) > 10)
 stop_if_not("X10" %in% colnames(test1))
+```
+
+## Validator functions
+
+```{r}
+strsplit(lsf.str("package:pointblank"), ":")
 ```
 
 
