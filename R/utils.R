@@ -2,5 +2,5 @@
 #'
 #' @export
 ers_files <- function() {
-  fs::path(getOption("ersvalidator.drive"), "UBPGroup/SHARED/IR/UBP data/IR Ascii files")
+  fs::path(getOption("ersvalidator.drive"), "UBPGroup/IR Ascii files")
 }

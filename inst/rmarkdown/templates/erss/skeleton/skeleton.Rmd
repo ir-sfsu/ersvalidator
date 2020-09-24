@@ -10,61 +10,229 @@ library(ersvalidator)
 library(readr)
 library(dplyr)
 library(fs)
+library(rsfsu)
+
+# check_data <- function(...) {
+#   
+# }
+
 ```
 
 ## Raw data
 ```{r warning = FALSE}
+erss <- get_erss(202, replace_labels = FALSE)
+erss <- mutate_if(erss, is.factor, as.character)
+# glimpse(erss)
 erss_path <- path(ers_files(), "ERSS MVS Files/ERSS/20202-20214/ers.prod.ers2020275.Edited.EALLEN.txt")
-test1 <- read_delim(erss_path,
-                col_names = FALSE,
-                delim = " ",
-                trim_ws = TRUE,
-                col_types = cols(
-                  X1 = col_character(),
-                  X2 = col_character(),
-                  X3 = col_character(),
-                  X4 = col_character(),
-                  X5 = col_character(),
-                  X6 = col_character(),
-                  X7 = col_character(),
-                  X8 = col_character(),
-                  X9 = col_character(),
-                  X10 = col_character(),
-                  X11 = col_character(),
-                  X12 = col_character(),
-                  X13 = col_character(),
-                  X14 = col_character(),
-                  X15 = col_character(),
-                  X16 = col_character(),
-                  X17 = col_character(),
-                  X18 = col_character(),
-                  X19 = col_character()
-                  )
-                )
-glimpse(test1)
+erss_raw_text_col_widths <- c(26, 26, 13, 21, 16, 9, 15, 24, 40, 8, 14, 12, 3, 8, 83, 22, 2, 12)
+col_names <- c("X01", "X02", "X03", "X04", "X05", "X06", "X07", "X08", "X09", "X10", "X11", "X12", "X13", "X14", "X15", "X16", "X17", "X18")
+test1 <- readr::read_fwf(erss_path, readr::fwf_widths(erss_raw_text_col_widths, col_names))
+# test1 <- read_delim(erss_path,
+#                 col_names = FALSE,
+#                 delim = " ",
+#                 trim_ws = TRUE,
+#                 col_types = cols(
+#                   X1 = col_character(),
+#                   X2 = col_character(),
+#                   X3 = col_character(),
+#                   X4 = col_character(),
+#                   X5 = col_character(),
+#                   X6 = col_character(),
+#                   X7 = col_character(),
+#                   X8 = col_character(),
+#                   X9 = col_character(),
+#                   X10 = col_character(),
+#                   X11 = col_character(),
+#                   X12 = col_character(),
+#                   X13 = col_character(),
+#                   X14 = col_character(),
+#                   X15 = col_character(),
+#                   X16 = col_character(),
+#                   X17 = col_character(),
+#                   X18 = col_character(),
+#                   X19 = col_character()
+#                   )
+#                 )
+# glimpse(test1)
 ```
 
 
-
-## Validation 1
-
-```{r validation_step_functions, validate = TRUE}
-col_exists(test1, columns = vars(X1, X2, X3, d, e, f))
-rows_distinct(test1, vars(X5, X10))
-col_vals_gt(test1, vars(d), 1000)
-```
-
-## Validation 2
-
-```{r stop_if_not, validate = TRUE}
-stop_if_not(nrow(test1) > 10)
-stop_if_not("X10" %in% colnames(test1))
-```
-
-## Validator functions
+## New Students
 
 ```{r}
-strsplit(lsf.str("package:pointblank"), ":")
+erss %>%
+  create_agent() %>% 
+  col_vals_not_in_set(vars(enrstat), 4:5,
+                      preconditions = . %>% filter(stlevel %in% 1:4)) %>%
+  interrogate()
 ```
 
+## Units Attempted
+
+```{r}
+erss %>% 
+  create_agent() %>% 
+  col_vals_between(vars(trmunit2), 1, 20) %>% 
+  interrogate()
+```
+
+## Step to College
+
+```{r}
+# erss %>%
+#   count(feewaivr == 6, acaddescr, feewaivr)
+```
+
+```{r}
+# erss %>%
+#   filter(acaddescr == "Step to College") %>%
+#   count(feewaivr)
+```
+
+```{r}
+erss %>% 
+  janitor::tabyl(capromise, admbasiscd)
+```
+
+## Disabled and EOP
+```{r}
+erss %>% 
+  count(disable, dssservc, eopstat)
+
+erss %>% count(enrstat, disable)
+erss %>% count(enrstat, dssservc)
+erss %>% count(eopstat, dssservc)
+```
+
+## Veterans
+
+```{r}
+
+```
+
+## Student Standing/Degree Objective
+
+```{r}
+
+```
+
+## Foreign Students Citizenship - North Korea
+
+```{r}
+
+```
+
+## Missing or Blank Data
+
+```{r, validate = TRUE}
+erss %>% 
+  col_vals_not_null(
+    vars(matricpd, matrictp, citizen, resstat, feewaivr, apprescd)
+    )
+```
+
+## EOP Status
+
+
+```{r}
+erss %>% 
+  create_agent() %>% 
+  col_vals_not_equal(
+    vars(eopstat), "Y",
+    preconditions = ~ . %>% filter(stlevel == 5)
+  ) %>% 
+  interrogate()
+```
+
+## Fee Waiver
+
+```{r}
+erss %>% 
+  count(enrstat, feewaivr)
+```
+
+## Credential Coding
+
+Create validation using on  ERS Manual – Coding Credential Students pages – primary validation; Secondary validation using academic plan and academic plan type against  credential coding
+
+```{r}
+erss %>% 
+  count(ACAD_PLAN, ACAD_PLAN_TYPE, CRED_TYPE)
+```
+
+
+## Disable Student Status
+
+Two fields Disabled Student Services Verified Disability (disable) and DSS Program Service (dssservc). Crosstab against enrollment status (enrstat); 2nd the two data fields against each other; students with dssservc = “X” must be equal to disable = “N”; blanks are valid as they will be recoded to ??? based on criteria indicated in the Op Manual;
+
+```{r}
+erss %>% 
+  create_agent() %>% 
+  col_vals_equal(
+    vars(disable), "N",
+    preconditions = . %>% filter(dssservc == "X")
+  ) %>% 
+  interrogate()
+  
+```
+
+## CA Promise
+
+```{r}
+
+```
+
+## ADT
+
+Use the five fields that determine ADT status: Degree held, admission basis code, enrollment status, student level and ADT status. --- 
+ADT status = 1 (must have the following associated fields: admission basis code (admbasiscd = “P”; degheld = 4 (TAA) or 6 (TAS); enrollment status (enrstat) = “4” (new); student level (stlevel) less than 5 (freshmen thru senior level); adtstatus =1); see new ug transfer syntax for 
+
+```{r}
+erss %>% 
+  create_agent() %>% 
+  col_vals_equal(vars(adtstatus), "1",
+                 preconditions = ~ . %>% filter(degheld %in% c("4", "6"),
+                                                enrstat == "4",
+                                                stlevel < "5",
+                                                adtstatus == "1")) %>% 
+  interrogate()
+```
+
+
+## Military/Veteran Status
+
+```{r}
+
+```
+
+## Ethnic Race Reporting
+
+Crosstab enrollment status (enrstat) and ethnicity code (ipedrace); A worthwhile validation check would be to see like term trends or semester trends by ethnicity; another possible validation for news students  the ERSR; another check is to see if American Indian and Pacific Islander headcounts begin to exceed 200.
+
+
+```{r}
+erss %>% 
+  count(enrstat, ipedrace)
+```
+
+
+## HS GPA/Transfer GPA(ERSA/ERSS): pending
+ 
+## Impaction related variables (ERSA): pending
+
+## Admission Status coding (ERSA): pending
+
+## Units Earned - campus, transfer and total (ERSD): pending
+
+## Admission Basis Code (ERSA/ERSS/ERSD): pending
+
+## Matriculation Date (ERSA/ERSS/ERSD): see #17; additional information pending
+
+## New Students
+
+## Citizenship and Resident Status
+
+```{r}
+
+```
 
